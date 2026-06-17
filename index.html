@@ -5,253 +5,303 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Foto Lite</title>
 <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#1b4332">
+<meta name="theme-color" content="#0f172a">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <link rel="icon" type="image/svg+xml" href="logo.svg">
 <link rel="apple-touch-icon" href="logo.svg">
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f8faf8;min-height:100vh;padding:16px;color:#1b4332}
-h1{text-align:center;font-size:1.8em;font-weight:800;color:#1b4332;margin:8px 0 4px}
-.sub{text-align:center;font-size:.85em;color:#52796f;margin-bottom:20px}
-.card{background:white;border-radius:16px;padding:20px;margin-bottom:16px;box-shadow:0 2px 12px rgba(27,67,50,.08);border:1px solid #d8f3dc}
-.drop-zone{border:3px dashed #95d5b2;border-radius:14px;padding:40px 20px;text-align:center;cursor:pointer;transition:all .3s;background:#f0faf4}
-.drop-zone.active{border-color:#2d6a4f;background:#d8f3dc}
-.drop-zone:hover{border-color:#40916c}
-.drop-icon{font-size:3em;margin-bottom:8px}
-.drop-text{font-size:1em;color:#52796f;font-weight:500}
-.drop-sub{font-size:.8em;color:#95d5b2;margin-top:4px}
-.preview-container{display:none;position:relative}
-.preview-img{width:100%;max-height:250px;object-fit:contain;border-radius:10px;background:#f0faf4}
-.preview-close{position:absolute;top:8px;right:8px;background:rgba(27,67,50,.7);color:white;border:none;width:28px;height:28px;border-radius:50%;font-size:1.1em;cursor:pointer;display:flex;align-items:center;justify-content:center}
-.info-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #d8f3dc}
-.info-row:last-child{border:none}
-.info-label{font-size:.85em;color:#52796f}
-.info-value{font-size:1em;font-weight:700;color:#1b4332}
-.info-value.green{color:#2d6a4f}
-.info-value.red{color:#c75b5b}
-label.section-label{display:block;font-size:.9em;font-weight:600;color:#1b4332;margin:14px 0 6px}
-.range-wrap{position:relative;margin:6px 0 2px}
-input[type=range]{width:100%;height:8px;-webkit-appearance:none;background:linear-gradient(90deg,#2d6a4f,#95d5b2);border-radius:4px;outline:none}
-input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:28px;height:28px;background:#1b4332;border-radius:50%;border:3px solid #95d5b2;cursor:pointer}
-.range-val{text-align:center;font-size:1.1em;font-weight:700;color:#2d6a4f;margin-top:2px}
-.btn{width:100%;padding:16px;border:none;border-radius:12px;font-size:1.1em;font-weight:700;cursor:pointer;transition:all .2s;margin-top:6px}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0f172a;min-height:100vh;padding:0;overflow-x:hidden}
+.app-header{background:linear-gradient(135deg,#1e293b,#0f172a);padding:24px 20px 20px;text-align:center;border-bottom:1px solid rgba(255,255,255,.06)}
+.app-logo{width:48px;height:48px;background:linear-gradient(135deg,#60a5fa,#3b82f6);border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 10px;font-size:1.5em}
+.app-title{font-size:1.6em;font-weight:800;color:#f1f5f9;letter-spacing:1px}
+.app-sub{font-size:.8em;color:#64748b;margin-top:4px}
+.container{padding:16px;max-width:420px;margin:0 auto}
+
+.card{background:#1e293b;border-radius:18px;padding:20px;margin-bottom:14px;border:1px solid rgba(255,255,255,.06)}
+.card-title{font-size:.85em;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:14px}
+
+.drop-zone{border:2px dashed #334155;border-radius:16px;padding:48px 20px;text-align:center;cursor:pointer;transition:all .3s;background:rgba(59,130,246,.03)}
+.drop-zone.active{border-color:#3b82f6;background:rgba(59,130,246,.08)}
+.drop-icon{font-size:3.5em;margin-bottom:12px}
+.drop-text{font-size:1.05em;color:#e2e8f0;font-weight:600}
+.drop-sub{font-size:.8em;color:#64748b;margin-top:6px}
+
+.preview-wrap{position:relative;display:none}
+.preview-img{width:100%;max-height:220px;object-fit:contain;border-radius:12px;background:#0f172a}
+.preview-close{position:absolute;top:8px;right:8px;background:rgba(15,23,42,.85);color:#94a3b8;border:1px solid #334155;width:32px;height:32px;border-radius:50%;font-size:1.2em;cursor:pointer;display:flex;align-items:center;justify-content:center}
+
+.input-group{margin-bottom:16px}
+.input-label{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.input-label span:first-child{font-size:.85em;color:#94a3b8;font-weight:600}
+.input-label span:last-child{font-size:1.1em;font-weight:800;color:#60a5fa}
+.input-field{width:100%;padding:14px 16px;background:#0f172a;border:2px solid #334155;border-radius:12px;color:#f1f5f9;font-size:1.1em;font-weight:600;text-align:center;outline:none;transition:border .2s}
+.input-field:focus{border-color:#3b82f6}
+.input-field::placeholder{color:#475569}
+
+.slider-wrap{position:relative;margin:8px 0}
+input[type=range]{width:100%;height:6px;-webkit-appearance:none;background:#334155;border-radius:3px;outline:none}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:26px;height:26px;background:#3b82f6;border-radius:50%;border:3px solid #1e293b;cursor:pointer;box-shadow:0 0 12px rgba(59,130,246,.4)}
+
+.preview-box{background:#0f172a;border-radius:14px;padding:16px;border:1px solid #334155}
+.preview-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.preview-row:last-child{border:none}
+.preview-label{font-size:.8em;color:#64748b}
+.preview-val{font-size:1em;font-weight:700;color:#e2e8f0}
+.preview-val.blue{color:#60a5fa}
+.preview-val.green{color:#34d399}
+.preview-val.yellow{color:#fbbf24}
+
+.btn{width:100%;padding:16px;border:none;border-radius:14px;font-size:1.05em;font-weight:700;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:10px}
 .btn:active{transform:scale(.97)}
-.btn-primary{background:linear-gradient(135deg,#2d6a4f,#1b4332);color:white}
-.btn-primary:disabled{background:#b7b7b7;cursor:not-allowed}
-.btn-download{background:linear-gradient(135deg,#40916c,#2d6a4f);color:white}
-.btn-reset{background:transparent;color:#52796f;border:2px solid #d8f3dc;margin-top:10px}
-.result-box{display:none;text-align:center;padding:16px;background:#d8f3dc;border-radius:12px;margin-top:12px}
-.result-emoji{font-size:2.5em}
-.result-text{font-size:1.2em;font-weight:700;color:#1b4332;margin:6px 0}
-.result-detail{font-size:.85em;color:#52796f}
+.btn-primary{background:linear-gradient(135deg,#3b82f6,#2563eb);color:white;box-shadow:0 4px 20px rgba(59,130,246,.25)}
+.btn-primary:disabled{background:#334155;color:#64748b;box-shadow:none;cursor:not-allowed}
+.btn-download{background:linear-gradient(135deg,#10b981,#059669);color:white;box-shadow:0 4px 20px rgba(16,185,129,.25)}
+.btn-reset{background:transparent;color:#64748b;border:1px solid #334155;margin-top:10px;font-size:.9em}
+
+.result-box{display:none;text-align:center;padding:20px;background:linear-gradient(135deg,rgba(59,130,246,.08),rgba(52,211,153,.08));border:1px solid rgba(59,130,246,.15);border-radius:16px;margin-top:14px}
+.result-emoji{font-size:3em}
+.result-title{font-size:1.3em;font-weight:800;color:#f1f5f9;margin:8px 0 4px}
+.result-detail{font-size:.85em;color:#94a3b8;line-height:1.6}
+.result-stats{display:flex;gap:8px;margin:14px 0}
+.stat-box{flex:1;background:rgba(15,23,42,.5);border-radius:12px;padding:12px 8px;border:1px solid #334155}
+.stat-num{font-size:1.3em;font-weight:800;color:#60a5fa}
+.stat-label{font-size:.65em;color:#64748b;margin-top:2px}
+
 .hidden{display:none}
-.spinner{display:inline-block;width:20px;height:20px;border:3px solid rgba(255,255,255,.3);border-top-color:white;border-radius:50%;animation:spin .8s linear infinite;margin-right:8px;vertical-align:middle}
+.spinner{display:inline-block;width:18px;height:18px;border:3px solid rgba(255,255,255,.2);border-top-color:white;border-radius:50%;animation:spin .7s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 canvas{display:none}
-.quick-btns{display:flex;gap:8px;margin:10px 0;flex-wrap:wrap}
-.quick-btn{flex:1;min-width:80px;padding:10px 8px;border:2px solid #b7e4c7;background:white;border-radius:10px;font-size:.8em;font-weight:600;color:#2d6a4f;cursor:pointer;text-align:center}
-.quick-btn.active{background:#2d6a4f;color:white;border-color:#2d6a4f}
-.quick-btn:active{transform:scale(.95)}
+.separator{height:1px;background:#334155;margin:16px 0}
 </style>
 </head>
 <body>
 
-<h1>Foto Lite</h1>
-<p class="sub">Comprime tus fotos sin perder calidad</p>
-
-<div class="card">
-  <div class="drop-zone" id="dropZone" onclick="document.getElementById('fileInput').click()">
-    <div class="drop-icon">📸</div>
-    <div class="drop-text">Toca aquí para elegir tu foto</div>
-    <div class="drop-sub">JPG, PNG, WEBP</div>
-  </div>
-  <input type="file" id="fileInput" accept="image/*" style="display:none" onchange="cargarFoto(this)">
-  <div class="preview-container" id="previewContainer">
-    <button class="preview-close" onclick="resetear()">&times;</button>
-    <img class="preview-img" id="previewImg">
-  </div>
+<div class="app-header">
+  <div class="app-logo">FL</div>
+  <div class="app-title">Foto Lite</div>
+  <div class="app-sub">Redimensiona sin perder calidad</div>
 </div>
 
-<div class="card hidden" id="panelAjustes">
-  <label class="section-label">Tamaño máximo (ancho)</label>
-  <div class="quick-btns">
-    <button class="quick-btn" onclick="setAncho(300)">300px</button>
-    <button class="quick-btn active" onclick="setAncho(600)">600px</button>
-    <button class="quick-btn" onclick="setAncho(800)">800px</button>
-    <button class="quick-btn" onclick="setAncho(1200)">1200px</button>
-  </div>
-  <div class="range-wrap">
-    <input type="range" id="sliderAncho" min="100" max="1920" value="600" step="10" oninput="actualizarAncho(this.value)">
-  </div>
-  <div class="range-val" id="valAncho">600 px</div>
+<div class="container">
 
-  <label class="section-label">Calidad</label>
-  <div class="quick-btns">
-    <button class="quick-btn" onclick="setCalidad(30)">Baja</button>
-    <button class="quick-btn active" onclick="setCalidad(60)">Media</button>
-    <button class="quick-btn" onclick="setCalidad(80)">Alta</button>
-    <button class="quick-btn" onclick="setCalidad(95)">Max</button>
-  </div>
-  <div class="range-wrap">
-    <input type="range" id="sliderCalidad" min="10" max="100" value="60" oninput="actualizarCalidad(this.value)">
-  </div>
-  <div class="range-val" id="valCalidad">60%</div>
-
-  <div class="info-row">
-    <span class="info-label">Original</span>
-    <span class="info-value" id="infoOriginal">-</span>
-  </div>
-  <div class="info-row">
-    <span class="info-label">Dimensiones originales</span>
-    <span class="info-value" id="infoDimensiones">-</span>
+  <div class="card">
+    <div class="card-title">1. Seleccionar foto</div>
+    <div class="drop-zone" id="dropZone" onclick="document.getElementById('fileInput').click()">
+      <div class="drop-icon">🖼️</div>
+      <div class="drop-text">Toca para elegir tu foto</div>
+      <div class="drop-sub">JPG · PNG · WEBP</div>
+    </div>
+    <input type="file" id="fileInput" accept="image/*" style="display:none" onchange="cargarFoto(this)">
+    <div class="preview-wrap" id="previewWrap">
+      <button class="preview-close" onclick="resetear()">&times;</button>
+      <img class="preview-img" id="previewImg">
+    </div>
   </div>
 
-  <button class="btn btn-primary" id="btnComprimir" onclick="comprimir()">
-    Comprimir Foto
-  </button>
+  <div class="card hidden" id="panelAjustes">
+    <div class="card-title">2. Ajustar tamaño</div>
 
-  <div class="result-box" id="resultBox">
-    <div class="result-emoji">✨</div>
-    <div class="result-text" id="resultText">-</div>
-    <div class="result-detail" id="resultDetail">-</div>
-    <button class="btn btn-download" onclick="descargar()" style="margin-top:12px">
-      Descargar Foto
-    </button>
+    <div class="input-group">
+      <div class="input-label">
+        <span>Ancho (px)</span>
+        <span id="valAncho">450 px</span>
+      </div>
+      <input type="number" class="input-field" id="inputAncho" value="450" min="50" max="3000" placeholder="Ej: 450" oninput="cambioAncho()">
+    </div>
+
+    <div class="input-group">
+      <div class="input-label">
+        <span>Alto (px)</span>
+        <span id="valAlto">-</span>
+      </div>
+      <input type="number" class="input-field" id="inputAlto" placeholder="Se calcula automáticamente" readonly>
+    </div>
+
+    <div class="input-group">
+      <div class="input-label">
+        <span>Calidad</span>
+        <span id="valCalidad">100%</span>
+      </div>
+      <div class="slider-wrap">
+        <input type="range" id="sliderCalidad" min="50" max="100" value="100" oninput="cambioCalidad()">
+      </div>
+    </div>
+
+    <div class="separator"></div>
+
+    <div class="card-title">3. Vista previa</div>
+    <div class="preview-box">
+      <div class="preview-row">
+        <span class="preview-label">Dimensiones nuevas</span>
+        <span class="preview-val blue" id="pvDimensiones">- x -</span>
+      </div>
+      <div class="preview-row">
+        <span class="preview-label">Peso original</span>
+        <span class="preview-val" id="pvOriginal">-</span>
+      </div>
+      <div class="preview-row">
+        <span class="preview-label">Peso estimado</span>
+        <span class="preview-val green" id="pvEstimado">-</span>
+      </div>
+      <div class="preview-row">
+        <span class="preview-label">Reduccion</span>
+        <span class="preview-val yellow" id="pvReduccion">-</span>
+      </div>
+    </div>
+
+    <div style="margin-top:16px">
+      <button class="btn btn-primary" id="btnProcesar" onclick="procesar()">
+        Redimensionar y Descargar
+      </button>
+    </div>
+
+    <div class="result-box" id="resultBox">
+      <div class="result-emoji">✅</div>
+      <div class="result-title">Foto lista</div>
+      <div class="result-detail" id="resultDetail"></div>
+      <div class="result-stats">
+        <div class="stat-box"><div class="stat-num" id="statOrig">-</div><div class="stat-label">ORIGINAL</div></div>
+        <div class="stat-box"><div class="stat-num" id="statNew">-</div><div class="stat-label">NUEVA</div></div>
+        <div class="stat-box"><div class="stat-num" id="statSave">-</div><div class="stat-label">AHORRO</div></div>
+      </div>
+    </div>
+
+    <button class="btn btn-reset" onclick="resetear()">Elegir otra foto</button>
   </div>
 
-  <button class="btn btn-reset" onclick="resetear()">Elegir otra foto</button>
 </div>
 
 <canvas id="canvas"></canvas>
 
 <script>
-var imagenOriginal = null;
-var blobFinal = null;
-var anchoMax = 600;
-var calidad = 60;
+var imgOriginal = null;
+var fileOriginal = 0;
+var calidadActual = 100;
+
+function formatBytes(b) {
+  if (b < 1024) return b + ' B';
+  if (b < 1048576) return (b / 1024).toFixed(1) + ' KB';
+  return (b / 1048576).toFixed(2) + ' MB';
+}
 
 function cargarFoto(input) {
   var file = input.files[0];
   if (!file) return;
   var reader = new FileReader();
   reader.onload = function(e) {
-    imagenOriginal = new Image();
-    imagenOriginal.onload = function() {
-      var kb = (file.size / 1024).toFixed(1);
-      var mb = (file.size / 1048576).toFixed(2);
-      var textoPeso = file.size > 1048576 ? mb + ' MB' : kb + ' KB';
-      document.getElementById('infoOriginal').textContent = textoPeso;
-      document.getElementById('infoDimensiones').textContent = imagenOriginal.width + ' x ' + imagenOriginal.height + ' px';
+    imgOriginal = new Image();
+    imgOriginal.onload = function() {
+      fileOriginal = file.size;
+      var defAncho = Math.min(imgOriginal.width, 450);
+      document.getElementById('inputAncho').value = defAncho;
       document.getElementById('previewImg').src = e.target.result;
-      document.getElementById('previewContainer').style.display = 'block';
+      document.getElementById('previewWrap').style.display = 'block';
       document.getElementById('dropZone').style.display = 'none';
       document.getElementById('panelAjustes').classList.remove('hidden');
       document.getElementById('resultBox').style.display = 'none';
-      blobFinal = null;
+      document.getElementById('pvOriginal').textContent = formatBytes(file.size);
+      recalcular();
     };
-    imagenOriginal.src = e.target.result;
+    imgOriginal.src = e.target.result;
   };
   reader.readAsDataURL(file);
 }
 
-function setAncho(val) {
-  anchoMax = val;
-  document.getElementById('sliderAncho').value = val;
+function cambioAncho() {
+  var val = parseInt(document.getElementById('inputAncho').value);
+  if (isNaN(val) || val < 50) val = 50;
+  if (val > 3000) val = 3000;
   document.getElementById('valAncho').textContent = val + ' px';
-  document.querySelectorAll('.quick-btns')[0].querySelectorAll('.quick-btn').forEach(function(b) {
-    b.classList.remove('active');
-    if (parseInt(b.textContent) === val) b.classList.add('active');
-  });
+  recalcular();
 }
 
-function setCalidad(val) {
-  calidad = val;
-  document.getElementById('sliderCalidad').value = val;
-  document.getElementById('valCalidad').textContent = val + '%';
-  document.querySelectorAll('.quick-btns')[1].querySelectorAll('.quick-btn').forEach(function(b) {
-    b.classList.remove('active');
-    if (b.textContent === 'Baja' && val === 30) b.classList.add('active');
-    if (b.textContent === 'Media' && val === 60) b.classList.add('active');
-    if (b.textContent === 'Alta' && val === 80) b.classList.add('active');
-    if (b.textContent === 'Max' && val === 95) b.classList.add('active');
-  });
+function cambioCalidad() {
+  calidadActual = parseInt(document.getElementById('sliderCalidad').value);
+  document.getElementById('valCalidad').textContent = calidadActual + '%';
+  recalcular();
 }
 
-function actualizarAncho(val) {
-  anchoMax = parseInt(val);
-  document.getElementById('valAncho').textContent = val + ' px';
-  document.querySelectorAll('.quick-btns')[0].querySelectorAll('.quick-btn').forEach(function(b) { b.classList.remove('active'); });
+function recalcular() {
+  if (!imgOriginal) return;
+  var ancho = parseInt(document.getElementById('inputAncho').value) || 450;
+  var ratio = imgOriginal.height / imgOriginal.width;
+  var alto = Math.round(ancho * ratio);
+  document.getElementById('inputAlto').value = alto;
+  document.getElementById('valAlto').textContent = alto + ' px';
+  document.getElementById('pvDimensiones').textContent = ancho + ' x ' + alto + ' px';
+
+  var pixels = ancho * alto;
+  var bytesEstimado = pixels * 3 * (calidadActual / 100) * 0.35;
+  var factorTamano = ancho / imgOriginal.width;
+  var pesoEstimado = fileOriginal * factorTamano * factorTamano * (calidadActual / 100);
+
+  if (pesoEstimado < 1000) pesoEstimado = bytesEstimado;
+
+  pesoEstimado = Math.max(pesoEstimado, 1000);
+  document.getElementById('pvEstimado').textContent = '~' + formatBytes(Math.round(pesoEstimado));
+
+  var reduccion = Math.round((1 - pesoEstimado / fileOriginal) * 100);
+  if (reduccion < 0) reduccion = 0;
+  if (reduccion > 99) reduccion = 99;
+  document.getElementById('pvReduccion').textContent = '-' + reduccion + '%';
 }
 
-function actualizarCalidad(val) {
-  calidad = parseInt(val);
-  document.getElementById('valCalidad').textContent = val + '%';
-  document.querySelectorAll('.quick-btns')[1].querySelectorAll('.quick-btn').forEach(function(b) { b.classList.remove('active'); });
-}
-
-function comprimir() {
-  if (!imagenOriginal) return;
-  var btn = document.getElementById('btnComprimir');
-  btn.innerHTML = '<span class="spinner"></span> Comprimiendo...';
+function procesar() {
+  if (!imgOriginal) return;
+  var btn = document.getElementById('btnProcesar');
+  btn.innerHTML = '<span class="spinner"></span> Procesando...';
   btn.disabled = true;
 
   setTimeout(function() {
     var canvas = document.getElementById('canvas');
     var ctx = canvas.getContext('2d');
-    var w = imagenOriginal.width;
-    var h = imagenOriginal.height;
+    var ancho = parseInt(document.getElementById('inputAncho').value) || 450;
+    var ratio = imgOriginal.height / imgOriginal.width;
+    var alto = Math.round(ancho * ratio);
 
-    if (w > anchoMax) {
-      h = Math.round(h * anchoMax / w);
-      w = anchoMax;
-    }
+    canvas.width = ancho;
+    canvas.height = alto;
 
-    canvas.width = w;
-    canvas.height = h;
-    ctx.drawImage(imagenOriginal, 0, 0, w, h);
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = 'high';
+    ctx.drawImage(imgOriginal, 0, 0, ancho, alto);
 
     canvas.toBlob(function(blob) {
-      blobFinal = blob;
-      var origBytes = document.getElementById('infoOriginal').textContent;
-      var newKb = (blob.size / 1024).toFixed(1);
-      var newMb = (blob.size / 1048576).toFixed(2);
-      var textoNuevo = blob.size > 1048576 ? newMb + ' MB' : newKb + ' KB';
+      var a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'foto_lite_' + ancho + 'px_' + Date.now() + '.jpg';
+      a.click();
+      URL.revokeObjectURL(a.href);
 
-      var pct = 0;
-      if (imagenOriginal.width > 0) {
-        pct = Math.round((1 - blob.size / (imagenOriginal.width * imagenOriginal.height * 4)) * 100);
-        if (pct < 0) pct = 0;
-      }
+      var ahorro = Math.round((1 - blob.size / fileOriginal) * 100);
+      if (ahorro < 0) ahorro = 0;
 
-      document.getElementById('resultText').textContent = textoNuevo;
-      document.getElementById('resultDetail').textContent = w + ' x ' + h + ' px | ' + calidad + '% calidad';
+      document.getElementById('statOrig').textContent = formatBytes(fileOriginal);
+      document.getElementById('statNew').textContent = formatBytes(blob.size);
+      document.getElementById('statSave').textContent = '-' + ahorro + '%';
+      document.getElementById('resultDetail').textContent = ancho + ' x ' + alto + ' px | ' + calidadActual + '% calidad | Sin deformación';
       document.getElementById('resultBox').style.display = 'block';
 
-      btn.innerHTML = 'Comprimir Foto';
+      btn.innerHTML = 'Redimensionar y Descargar';
       btn.disabled = false;
-    }, 'image/jpeg', calidad / 100);
-  }, 100);
-}
-
-function descargar() {
-  if (!blobFinal) return;
-  var a = document.createElement('a');
-  a.href = URL.createObjectURL(blobFinal);
-  a.download = 'foto_lite_' + Date.now() + '.jpg';
-  a.click();
-  URL.revokeObjectURL(a.href);
+    }, 'image/jpeg', calidadActual / 100);
+  }, 150);
 }
 
 function resetear() {
-  imagenOriginal = null;
-  blobFinal = null;
+  imgOriginal = null;
+  fileOriginal = 0;
   document.getElementById('fileInput').value = '';
   document.getElementById('dropZone').style.display = 'block';
-  document.getElementById('previewContainer').style.display = 'none';
+  document.getElementById('previewWrap').style.display = 'none';
+  document.getElementById('panelAjustes').classList.remove('hidden');
   document.getElementById('panelAjustes').classList.add('hidden');
   document.getElementById('resultBox').style.display = 'none';
+  document.getElementById('sliderCalidad').value = 100;
+  calidadActual = 100;
+  document.getElementById('valCalidad').textContent = '100%';
 }
 </script>
 </body>
